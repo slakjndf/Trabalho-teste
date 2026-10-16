@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mente em Paz | Saúde Psicológica</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = { theme: { extend: {
+  fontFamily: { sans: ['Poppins', 'ui-sans-serif', 'system-ui', 'sans-serif'] },
+  colors: { ink: '#1d2a47', azul: { DEFAULT: '#8fb8f0', deep: '#4f7fd1' }, menta: '#b9e6d3', lav: '#cdc3f3', paper: '#f6f8fc', night: '#12203b' }
+} } }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<style>
+  html { scroll-behavior: smooth; }
+  html.lenis, html.lenis body { height: auto; }
+  .lenis.lenis-smooth { scroll-behavior: auto !important; }
+  body { background: #f6f8fc; color: #1d2a47; }
+  .blob { position: absolute; border-radius: 9999px; filter: blur(70px); opacity: .7; animation: drift 18s ease-in-out infinite alternate; }
+  @keyframes drift { to { transform: translate(70px, -50px) scale(1.18); } }
+  .rise { opacity: 0; transform: translateY(24px); transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1); transition-delay: var(--d, 0s); }
+  .rise.in { opacity: 1; transform: none; }
+  .card { transition: transform .5s cubic-bezier(.2,.7,.2,1), box-shadow .5s ease; }
+  .card:hover { transform: translateY(-8px); box-shadow: 0 30px 50px -24px rgba(79,127,209,.5); }
+  .tips { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .5s ease; }
+  .tips > div { overflow: hidden; }
+  .open .tips { grid-template-rows: 1fr; }
+  .open .chev { transform: rotate(180deg); }
+  .chev { transition: transform .4s ease; }
+  .cta { transition: transform .35s ease, box-shadow .35s ease, background-color .35s ease; }
+  .cta:hover { transform: translateY(-3px); box-shadow: 0 18px 34px -14px rgba(79,127,209,.7); }
+  .cta:active { transform: scale(.97); }
+  .orb, .ring { transition-timing-function: cubic-bezier(.45,.05,.55,.95); transform: scale(.55); }
+  .orb { box-shadow: 0 0 90px rgba(143,184,240,.45); }
+  .ring { border: 1px solid rgba(255,255,255,.28); }
+  .gsap .rise { transition: none; }
+  .gsap .card.done { transition: transform .6s cubic-bezier(.2,.7,.2,1), box-shadow .6s ease; }
+  .gsap .cta.done { transition: transform .35s ease, box-shadow .35s ease, background-color .35s ease; }
+  .tips li { opacity: 0; transform: translateY(10px); transition: opacity .5s ease, transform .6s cubic-bezier(.2,.7,.2,1); }
+  .open .tips li { opacity: 1; transform: none; }
+  .open .tips li:nth-child(1) { transition-delay: .15s; }
+  .open .tips li:nth-child(2) { transition-delay: .25s; }
+  .open .tips li:nth-child(3) { transition-delay: .35s; }
+  #barra { transform-origin: left; transform: scaleX(0); }
+  :focus-visible { outline: 3px solid #4f7fd1; outline-offset: 3px; }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+    .rise { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body class="font-sans antialiased">
+
+<header class="fixed inset-x-0 top-0 z-50 backdrop-blur-md bg-paper/60">
+  <div id="barra" class="absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-menta via-azul to-lav"></div>
+  <nav class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+    <a href="#inicio" class="flex items-center gap-2 font-semibold">
+      <span class="h-4 w-4 rounded-full bg-gradient-to-br from-menta to-azul-deep"></span> Mente em Paz
+    </a>
+    <div class="hidden gap-8 text-sm text-ink/70 md:flex">
+      <a class="transition hover:text-azul-deep" href="#conceito">Conceito</a>
+      <a class="transition hover:text-azul-deep" href="#pilares">Pilares</a>
+      <a class="transition hover:text-azul-deep" href="#respire">Respire</a>
+      <a class="transition hover:text-azul-deep" href="#apoio">Apoio</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+<!-- Hero -->
+<section id="inicio" class="relative flex min-h-screen items-center overflow-hidden bg-gradient-to-b from-[#e6f0ff] via-paper to-paper">
+  <div id="blobs" class="absolute inset-0">
+    <div class="blob bg-azul h-96 w-96 -left-24 top-24"></div>
+    <div class="blob bg-menta h-80 w-80 right-10 top-40" style="animation-delay:-6s"></div>
+    <div class="blob bg-lav h-96 w-96 bottom-0 left-1/3" style="animation-delay:-11s"></div>
+  </div>
+  <div class="relative mx-auto w-full max-w-6xl px-6 pt-24">
+    <h1 id="titulo" class="max-w-3xl text-4xl font-semibold leading-tight tracking-tight sm:text-6xl" style="--d:.1s">Cuidar da mente é cuidar de quem você é.</h1>
+    <p class="rise mt-6 max-w-xl text-lg font-light leading-relaxed text-ink/75" style="--d:.35s">Um espaço calmo para entender o que sentimos, aprender a lidar com o dia a dia e lembrar que pedir ajuda faz parte do caminho.</p>
+    <a href="#conceito" class="cta rise mt-10 inline-block rounded-full bg-ink px-8 py-4 font-medium text-white hover:bg-azul-deep" style="--d:.6s">Começar jornada</a>
+  </div>
+</section>
+
+<!-- Conceito -->
+<section id="conceito" class="mx-auto grid max-w-6xl gap-12 px-6 py-28 md:grid-cols-2">
+  <div class="rise">
+    <h2 class="text-3xl font-semibold leading-snug sm:text-4xl">O que é saúde mental?</h2>
+    <p class="mt-4 text-xl font-light text-azul-deep">Não é estar feliz o tempo todo.</p>
+  </div>
+  <div class="rise space-y-5 leading-relaxed text-ink/80" style="--d:.15s">
+    <p>Saúde mental é a capacidade de lidar com as emoções, enfrentar as pressões da rotina, aprender, trabalhar e se relacionar com as outras pessoas. Ela muda ao longo da vida e pode oscilar, e tudo bem.</p>
+    <p>Assim como o corpo, a mente precisa de cuidado contínuo: descanso, apoio, uma rotina possível e, quando necessário, acompanhamento profissional.</p>
+    <div class="flex flex-wrap gap-3 pt-2 text-sm">
+      <span class="rounded-full bg-menta/60 px-4 py-2">Lidar com as emoções</span>
+      <span class="rounded-full bg-lav/60 px-4 py-2">Manter vínculos</span>
+      <span class="rounded-full bg-azul/40 px-4 py-2">Descansar de verdade</span>
+    </div>
+  </div>
+</section>
+
+<!-- Pilares -->
+<section id="pilares" class="bg-gradient-to-b from-white to-paper py-28">
+  <div class="mx-auto max-w-6xl px-6">
+    <div class="rise max-w-2xl">
+      <h2 class="text-3xl font-semibold sm:text-4xl">Quatro pilares para o dia a dia</h2>
+      <p class="mt-4 font-light text-ink/70">Toque em cada cartão para ver dicas práticas.</p>
+    </div>
+    <div class="mt-14 grid items-start gap-6 sm:grid-cols-2 lg:grid-cols-4">
+
+      <article data-card class="card rise rounded-3xl bg-white p-7 shadow-[0_10px_30px_-18px_rgba(29,42,71,.35)]" style="--d:.05s">
+        <div class="grid h-12 w-12 place-items-center rounded-2xl bg-azul/40 text-azul-deep"><svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h11a3 3 0 1 0-3-3M3 12h15a3 3 0 1 1-3 3M3 16h7"/></svg></div>
+        <h3 class="mt-5 text-lg font-semibold">Ansiedade e estresse</h3>
+        <p class="mt-2 text-sm leading-relaxed text-ink/70">Sinais de que o corpo pede uma pausa e formas simples de reduzir a tensão.</p>
+        <div class="tips"><div><ul class="mt-4 space-y-2 border-t border-ink/10 pt-4 text-sm text-ink/80">
+          <li>Respire devagar, alongando a expiração.</li>
+          <li>Divida tarefas grandes em passos pequenos.</li>
+          <li>Evite cafeína e telas perto da hora de dormir.</li></ul></div></div>
+        <button class="mt-5 flex items-center gap-2 text-sm font-medium text-azul-deep" aria-expanded="false"><span>Ver dicas</span><svg class="chev h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+      </article>
+
+      <article data-card class="card rise rounded-3xl bg-white p-7 shadow-[0_10px_30px_-18px_rgba(29,42,71,.35)]" style="--d:.15s">
+        <div class="grid h-12 w-12 place-items-center rounded-2xl bg-menta/60 text-emerald-700"><svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.5-9-9a5 5 0 0 1 9-3 5 5 0 0 1 9 3c-2 4.5-9 9-9 9z"/></svg></div>
+        <h3 class="mt-5 text-lg font-semibold">Importância do autocuidado</h3>
+        <p class="mt-2 text-sm leading-relaxed text-ink/70">Cuidar de si não é egoísmo: é o que sustenta todo o resto.</p>
+        <div class="tips"><div><ul class="mt-4 space-y-2 border-t border-ink/10 pt-4 text-sm text-ink/80">
+          <li>Durma em horários regulares.</li>
+          <li>Reserve um momento diário só para você.</li>
+          <li>Movimente o corpo de um jeito que dê prazer.</li></ul></div></div>
+        <button class="mt-5 flex items-center gap-2 text-sm font-medium text-azul-deep" aria-expanded="false"><span>Ver dicas</span><svg class="chev h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+      </article>
+
+      <article data-card class="card rise rounded-3xl bg-white p-7 shadow-[0_10px_30px_-18px_rgba(29,42,71,.35)]" style="--d:.25s">
+        <div class="grid h-12 w-12 place-items-center rounded-2xl bg-lav/60 text-violet-700"><svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.5 7.2L4 20l1-4.5A8 8 0 1 1 21 12z"/></svg></div>
+        <h3 class="mt-5 text-lg font-semibold">Quando buscar ajuda profissional</h3>
+        <p class="mt-2 text-sm leading-relaxed text-ink/70">Quando o sofrimento dura semanas e atrapalha a rotina, psicólogos e psiquiatras podem ajudar.</p>
+        <div class="tips"><div><ul class="mt-4 space-y-2 border-t border-ink/10 pt-4 text-sm text-ink/80">
+          <li>Tristeza, medo ou irritação que não passam.</li>
+          <li>Dificuldade para dormir, estudar ou trabalhar.</li>
+          <li>Pensamentos de se machucar pedem ajuda imediata, como o CVV (188).</li></ul></div></div>
+        <button class="mt-5 flex items-center gap-2 text-sm font-medium text-azul-deep" aria-expanded="false"><span>Ver dicas</span><svg class="chev h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+      </article>
+
+      <article data-card class="card rise rounded-3xl bg-white p-7 shadow-[0_10px_30px_-18px_rgba(29,42,71,.35)]" style="--d:.35s">
+        <div class="grid h-12 w-12 place-items-center rounded-2xl bg-azul/40 text-azul-deep"><svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c0-9 5-14 15-14 0 10-5 15-14 15M5 19l8-8"/></svg></div>
+        <h3 class="mt-5 text-lg font-semibold">Práticas de mindfulness</h3>
+        <p class="mt-2 text-sm leading-relaxed text-ink/70">Atenção plena é voltar ao momento presente, sem julgamento.</p>
+        <div class="tips"><div><ul class="mt-4 space-y-2 border-t border-ink/10 pt-4 text-sm text-ink/80">
+          <li>Observe cinco coisas ao seu redor.</li>
+          <li>Faça uma refeição sem telas.</li>
+          <li>Experimente o exercício de respiração logo abaixo.</li></ul></div></div>
+        <button class="mt-5 flex items-center gap-2 text-sm font-medium text-azul-deep" aria-expanded="false"><span>Ver dicas</span><svg class="chev h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- Respiração -->
+<section id="respire" class="bg-night py-28 text-white">
+  <div class="mx-auto flex max-w-3xl flex-col items-center px-6 text-center">
+    <h2 class="rise text-3xl font-semibold sm:text-4xl">Respire comigo por um minuto</h2>
+    <p class="rise mt-4 max-w-md font-light text-white/70" style="--d:.1s">Acompanhe o círculo: inspire enquanto ele cresce, segure e solte o ar enquanto ele diminui.</p>
+    <div class="rise relative mt-14 grid h-72 w-72 place-items-center sm:h-80 sm:w-80" style="--d:.2s">
+      <div class="ring absolute inset-0 rounded-full" data-k="1.1"></div>
+      <div class="ring absolute inset-0 rounded-full" data-k="1.2"></div>
+      <div id="orb" class="orb absolute inset-0 rounded-full bg-gradient-to-br from-menta via-azul to-lav"></div>
+      <span id="fase" class="relative text-xl font-medium text-night" aria-live="polite">Respire</span>
+    </div>
+    <button id="btn" class="cta mt-14 rounded-full bg-white px-8 py-4 font-medium text-night hover:bg-menta">Iniciar respiração</button>
+    <p class="mt-5 text-sm font-light text-white/60">Inspirar por 4 segundos, segurar por 2 e expirar por 6. Ciclos completos: <span id="ciclos">0</span></p>
+  </div>
+</section>
+</main>
+
+<!-- Rodapé -->
+<footer id="apoio" class="bg-gradient-to-b from-lav/30 to-menta/30 py-20">
+  <div class="mx-auto grid max-w-6xl gap-12 px-6 md:grid-cols-2">
+    <div class="rise">
+      <h2 class="text-2xl font-semibold">Você não está sozinho.</h2>
+      <p class="mt-4 max-w-md font-light leading-relaxed text-ink/75">Pedir ajuda é um ato de coragem. Você não precisa estar bem o tempo todo, e cada passo pequeno conta.</p>
+    </div>
+    <div class="rise space-y-4 text-sm" style="--d:.15s">
+      <p class="rounded-2xl bg-white/70 p-4"><span class="font-medium">Contato CVV (Centro de Valorização da Vida)</span><br><a class="transition hover:text-azul-deep" href="tel:188">188</a>, ligação gratuita, 24 horas</p>
+      <p class="rounded-2xl bg-white/70 p-4"><span class="font-medium">E-mail de apoio</span><br><a class="transition hover:text-azul-deep" href="mailto:9ano.apoio.integra@gmail.com">9ano.apoio.integra@gmail.com</a></p>
+    </div>
+  </div>
+  <div class="mx-auto mt-14 max-w-6xl border-t border-ink/10 px-6 pt-6 text-xs text-ink/60">
+    <p>Protótipo acadêmico. Em situação de crise, ligue para o CVV pelo 188.</p>
+    <p class="mt-1">© 2026 Mente em Paz</p>
+  </div>
+</footer>
+
+<script>
+  // Entradas, paralaxe e rolagem com inércia
+  const reduzir = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (window.gsap && window.ScrollTrigger && !reduzir) {
+    document.documentElement.classList.add('gsap');
+    gsap.registerPlugin(ScrollTrigger);
+
+    if (window.Lenis) {
+      const lenis = new Lenis({ lerp: 0.085 });
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add(t => lenis.raf(t * 1000));
+      gsap.ticker.lagSmoothing(0);
+      document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
+        e.preventDefault();
+        lenis.scrollTo(a.getAttribute('href'), { duration: 1.6, easing: t => 1 - Math.pow(1 - t, 4) });
+      }));
+    }
+
+    // Título: palavras sobem de uma máscara
+    const titulo = document.getElementById('titulo');
+    titulo.innerHTML = titulo.textContent.split(' ').map(p =>
+      '<span class="inline-block overflow-hidden align-bottom pb-[.12em] -mb-[.12em]"><span class="pal inline-block">' + p + '</span></span>').join(' ');
+    gsap.from('.pal', { yPercent: 115, duration: 1.4, ease: 'expo.out', stagger: .08, delay: .2 });
+
+    // Demais elementos: entrada suave ao rolar
+    gsap.utils.toArray('.rise').forEach(el => {
+      gsap.fromTo(el, { autoAlpha: 0, y: 44 }, {
+        autoAlpha: 1, y: 0, duration: 1.4, ease: 'expo.out',
+        delay: parseFloat(getComputedStyle(el).getPropertyValue('--d')) || 0,
+        scrollTrigger: { trigger: el, start: 'top 90%', once: true },
+        onComplete: () => { gsap.set(el, { clearProps: 'transform' }); el.classList.add('done'); }
+      });
+    });
+
+    // Paralaxe do hero e barra de progresso
+    const hero = { trigger: '#inicio', start: 'top top', end: 'bottom top', scrub: true };
+    gsap.to('#blobs', { yPercent: 30, ease: 'none', scrollTrigger: hero });
+    gsap.to('#inicio .relative.mx-auto', { yPercent: -12, opacity: .15, ease: 'none', scrollTrigger: hero });
+    gsap.to('#barra', { scaleX: 1, ease: 'none', scrollTrigger: { trigger: document.body, start: 'top top', end: 'bottom bottom', scrub: .3 } });
+    addEventListener('load', () => ScrollTrigger.refresh());
+  } else {
+    const io = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    }), { threshold: .15 });
+    document.querySelectorAll('.rise').forEach(el => io.observe(el));
+  }
+
+  // Cartões expansíveis
+  document.querySelectorAll('[data-card]').forEach(card => {
+    const b = card.querySelector('button');
+    b.addEventListener('click', () => {
+      const aberto = card.classList.toggle('open');
+      b.setAttribute('aria-expanded', aberto);
+      b.querySelector('span').textContent = aberto ? 'Fechar dicas' : 'Ver dicas';
+    });
+  });
+
+  // Simulador de respiração
+  const orb = document.getElementById('orb'), fase = document.getElementById('fase');
+  const btn = document.getElementById('btn'), ciclos = document.getElementById('ciclos');
+  const etapas = [['Inspirar', 4000, 1], ['Segurar', 2000, 1], ['Expirar', 6000, .55]];
+  let ativo = false, i = 0, n = 0, timer;
+  const camadas = [[orb, 1, 0], ...[...document.querySelectorAll('.ring')].map((el, k) => [el, +el.dataset.k, 150 * (k + 1)])];
+  camadas.forEach(([el, k]) => el.style.transform = 'scale(' + (.55 * k) + ')');
+
+  function passo() {
+    if (!ativo) return;
+    const [texto, ms, escala] = etapas[i];
+    fase.textContent = texto;
+    camadas.forEach(([el, k, atraso]) => {
+      el.style.transitionDuration = ms + 'ms';
+      el.style.transitionDelay = atraso + 'ms';
+      el.style.transform = 'scale(' + (escala * k) + ')';
+    });
+    timer = setTimeout(() => {
+      i = (i + 1) % etapas.length;
+      if (i === 0) ciclos.textContent = ++n;
+      passo();
+    }, ms);
+  }
+
+  btn.addEventListener('click', () => {
+    ativo = !ativo;
+    if (ativo) { i = 0; btn.textContent = 'Pausar'; passo(); }
+    else {
+      clearTimeout(timer);
+      fase.textContent = 'Pausado';
+      camadas.forEach(([el, k, atraso]) => {
+        el.style.transitionDuration = '1500ms';
+        el.style.transitionDelay = atraso + 'ms';
+        el.style.transform = 'scale(' + (.55 * k) + ')';
+      });
+      btn.textContent = 'Retomar';
+    }
+  });
+</script>
+</body>
+</html>
